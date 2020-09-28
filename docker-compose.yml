@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:12.4
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    environment:
+      RAILS_ENV: development
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: root
+    volumes:
+      - "./app:/usr/src/app/app"
+      - "./config:/usr/src/app/config"
+      - "./db:/usr/src/app/db"
+    ports:
+      - "3000:3000"
+
+volumes:
+  db-data:
+
