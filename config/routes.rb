@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :organizations
   resources :projects do
     resources :jobs
   end
