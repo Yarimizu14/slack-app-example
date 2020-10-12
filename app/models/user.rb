@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  belongs_to :organization
 
   def self.find_or_create_from_auth_hash(slack_user)
     User.find_or_create_by(id: slack_user['id']) do |u|
