@@ -12,11 +12,16 @@ class AuthController < ApplicationController
     @user = User.find(user_id)
 
     slack_user = access_token['authed_user']
-    if @user.update(slack_id: slack_user['id'], access_token: slack_user['access_token'])
-      render plain: { message: 'ok', user_id: @user.id }.to_json
-    else
+    unless @user.update(slack_id: slack_user['id'], access_token: slack_user['access_token'])
       render json: @user.errors, status: :unprocessable_entity
     end
+
+    slack_team = access_token['team']
+    unless @user.organization.update(slack_team_id: slack_team['id'])
+      render json: @user.organization.errors, status: :unprocessable_entity
+    end
+
+    render plain: { message: 'ok', user_id: @user.id }.to_json
   end
 
   protected
