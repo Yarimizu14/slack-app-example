@@ -1,9 +1,10 @@
 class ProjectsController < ApplicationController
+  before_action :get_organization
   before_action :set_project, only: [:show, :update, :destroy]
 
   # GET /projects
   def index
-    @projects = Project.all
+    @projects = @organization.projects.all
 
     render json: @projects
   end
@@ -15,10 +16,10 @@ class ProjectsController < ApplicationController
 
   # POST /projects
   def create
-    @project = Project.new(project_params)
+    @project = @organization.projects.build(project_params)
 
     if @project.save
-      render json: @project, status: :created, location: @project
+      render json: @project, status: :created
     else
       render json: @project.errors, status: :unprocessable_entity
     end
@@ -39,9 +40,13 @@ class ProjectsController < ApplicationController
   end
 
   private
+    def get_organization
+      @organization = Organization.find(params[:organization_id])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      @project = Project.find(params[:id])
+      @project = @organization.projects.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
