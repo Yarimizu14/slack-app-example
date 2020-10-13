@@ -5,7 +5,7 @@ class Slack::CommandsController < ApplicationController
     if @user.organization.slack_team_id != params[:team_id]
       render json: {err: 'invalid_team_id'}, status: :unprocessable_entity
     else
-      render json: @user
+      render plain: { message: 'ok', user_id: @user.id }.to_json
     end
   end
 
