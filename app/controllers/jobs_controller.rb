@@ -19,6 +19,10 @@ class JobsController < ApplicationController
     @job = @project.jobs.build(job_params)
 
     if @job.save
+      slack = OmniAuth::Slack.build_access_token(ENV['SLACK_OAUTH_CLIENT_ID'], ENV['SLACK_OAUTH_CLIENT_SECRET'], @project.organization.slack_bot_token)
+      @project.slack_job_notifications.each do |n|
+        slack.post('api/chat.postMessage', params: {channel: n.slack_channel_id, text: "Job #{@job.id} successfully finished"})
+      end
       render json: @job, status: :created
     else
       render json: @job.errors, status: :unprocessable_entity

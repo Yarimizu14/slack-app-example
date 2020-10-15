@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  slack_channel_id: MyString
+  slack_channel_name: MyString
+  webhook_url: MyString
+  project: one
+
+two:
+  slack_channel_id: MyString
+  slack_channel_name: MyString
+  webhook_url: MyString
+  project: two
