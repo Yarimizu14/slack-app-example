@@ -42,3 +42,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'ginjo-omniauth-slack', require:'omniauth-slack'
 gem 'dotenv-rails'
+
+
+gem 'rest-client', '~> 2.1'
