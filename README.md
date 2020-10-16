@@ -22,7 +22,7 @@ provider :slack, ENV['SLACK_OAUTH_CLIENT_ID'], ENV['SLACK_OAUTH_CLIENT_SECRET'],
 
 以下のScopeでPermissionを取得しています。
 
-![OAuth Scope](https://github.com/Yarimizu14/slack-app-example/blob/master/images/oauth-scopes.png)
+<img src="https://github.com/Yarimizu14/slack-app-example/blob/master/images/oauth-scopes.png" width="500">
 
 スコープに`chat:write`を含めることでSlack Bot Tokenでチャネルへの投稿ができるようになります。
 
@@ -54,7 +54,7 @@ https://github.com/Yarimizu14/slack-app-example/blob/master/app/controllers/auth
 
 [Slash Command](https://api.slack.com/interactivity/slash-commands)でコマンドが実行されたSlackチャネルとリソースを紐付けます。
 
-![slash-command-setting](https://github.com/Yarimizu14/slack-app-example/blob/master/images/slash-command.png)
+<img src="https://github.com/Yarimizu14/slack-app-example/blob/master/images/slash-command.png" width="500">
 
 #### Request URL
 
@@ -75,11 +75,11 @@ https://github.com/Yarimizu14/slack-app-example/blob/master/app/controllers/slac
 
 [Shortcut](https://api.slack.com/interactivity/shortcuts/using#global_shortcuts)で起動するフォームによりSlackチャネルと指定されたリソースを紐付けます。
 
-![invoke shortcut](https://github.com/Yarimizu14/slack-app-example/blob/master/images/invoke-shortcut.png)
+<img src="https://github.com/Yarimizu14/slack-app-example/blob/master/images/invoke-shortcut.png" width="500">
 
 ⚡️アイココンから `shortcut`を起動します。
 
-![shortcut-modal](https://github.com/Yarimizu14/slack-app-example/blob/master/images/slack-shortcut.png)
+<img src="https://github.com/Yarimizu14/slack-app-example/blob/master/images/slack-shortcut.png" width="500">
 
 起動したモーダルでSlackのチャネルとリソースを選択してもらうことで紐付けを行います。
 
