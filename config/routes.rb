@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   namespace :slack do
     resources :commands, only: [:create]
+    resources :shortcuts, only: [:create]
   end
 
   get 'auth/login', to: 'auth#login'
