@@ -53,7 +53,7 @@ https://github.com/Yarimizu14/slack-app-example/blob/master/app/controllers/auth
 Slash Command実行時に呼び出されるエンドポイントが必要になります。
 
 ```
-POST /slack/command
+POST /slack/commands
 ```
 
 https://github.com/Yarimizu14/slack-app-example/blob/master/app/controllers/slack/commands_controller.rb#L6-L26
@@ -67,11 +67,40 @@ https://github.com/Yarimizu14/slack-app-example/blob/master/app/controllers/slac
 
 [Shortcut](https://api.slack.com/interactivity/shortcuts/using#global_shortcuts)
 
+![invoke shortcut](https://github.com/Yarimizu14/slack-app-example/blob/master/images/invoke-shortcut.png)
+
+⚡️アイココンから `shortcut`を起動します。
+
+![shortcut-modal](https://github.com/Yarimizu14/slack-app-example/blob/master/images/slack-shortcut.png)
+
+起動したモーダルでSlackのチャネルとリソースを選択してもらうことで紐付けを行います。
+
 > These type of shortcuts are intended to trigger workflows that can operate without the context of a channel or message.
 
-API Endpointにチャネルの情報が渡らないので、ユーザーにチャネル選択してもらうことになり少し煩雑になる。
+API Endpointにチャネルの情報が渡らないので、ユーザーにチャネル選択してもらう必要があります。
 
+#### Request URL
 
+Slash Command実行時に呼び出されるエンドポイントが必要になります。
+
+```
+POST /slack/shortcuts
+```
+
+https://github.com/Yarimizu14/slack-app-example/blob/master/app/controllers/slack/shortcuts_controller.rb
+
+Payloadに含まれる `type`によって以下の2種類のリクエストを判別して処理します。
+
+- Shortcut起動時のリクエストの処理 - `type: shortcut`
+- モーダルのフォーム送信リクエスト - `type: view_submission`
+
+#### Shortcut起動時のリクエスト
+
+[モーダル表示](https://api.slack.com/surfaces/modals/using#opening)のためのレスポンスを返却します。選択可能な項目を返却するJSONに差し込みます。
+
+#### モーダルのフォーム送信リクエスト
+
+送られてきたPayloadから選択項目を抽出しDBへ格納します。
 
 ##### References
 
