@@ -1,14 +1,22 @@
 # slack-app-example
 
+- [Slash Command](https://api.slack.com/interactivity/slash-commands)
+- [Shortcut](https://api.slack.com/interactivity/shortcuts/using#global_shortcuts)
+
+を実装したSlack Appのサンプルです。
+
+Slash CommandまたはShortcut経由でProjectリソースとSlack Channelを紐づけることができます。
+紐付けられたProject下のJobリソースが作成されるたびにbotユーザーが対応するSlackチャネルに通知を行います。
+
 ### Slack OAuth 2.0
+
+Slack Appの配布には、[Slack OAuth 2.0](https://api.slack.com/legacy/oauth#authenticating-users-with-oauth__the-oauth-flow)の認証フローを実装する必要があります。
 
 omniauthのプラグイン[ginjo/omniauth-slack](https://github.com/ginjo/omniauth-slack)を使って実装しています。
 
 ```ruby
 provider :slack, ENV['SLACK_OAUTH_CLIENT_ID'], ENV['SLACK_OAUTH_CLIENT_SECRET'], scope:'links:read,links:write,commands,chat:write,team:read'
 ```
-
-[Slack OAuth 2.0](https://api.slack.com/legacy/oauth#authenticating-users-with-oauth__the-oauth-flow)の認証フローを実装します。
 
 #### OAuth 2.0のScopeについて
 
@@ -25,7 +33,7 @@ provider :slack, ENV['SLACK_OAUTH_CLIENT_ID'], ENV['SLACK_OAUTH_CLIENT_SECRET'],
 
 ##### リダイレクト用Endpoint
 
-- リダイレクト前にユーザーが登録済みかをリダイレクト前に確認します
+- リダイレクト前にユーザーが登録済みかを確認します
     - (Callback用EndpointでUsersテーブルの `slack_id` カラムでSlackのユーザーIDを紐付けるため)
 - ユーザーをSlackの認証画面へリダイレクトします
 
@@ -38,13 +46,13 @@ GET /auth/slack/callback
 https://github.com/Yarimizu14/slack-app-example/blob/master/app/controllers/auth_controller.rb#L9-L26
 
 - 認証後のCallback Endpointで[こちら](https://github.com/Yarimizu14/slack-app-example/blob/master/app/controllers/auth_controller.rb#L31-L49)の情報が取得できます
-    - Slack User ID: ユーザーテーブルのカラムに追加します。対応するユーザーIDはセッションから取得します。
-    - Slack Team ID: Organizationテーブルのカラムに追加し認証ユーザーが所属するOrganizationとSlackのTeamを連携させます。
-    - Slack Bot Token: Organizationテーブルのカラムに追加しSlackへの投稿などの認証に使用します。
+    - `Slack User ID`: ユーザーテーブルのカラムに追加します。対応するユーザーIDはセッションから取得します。
+    - `Slack Team ID`: Organizationテーブルのカラムに追加し認証ユーザーが所属するOrganizationとSlackのTeamを連携させます。
+    - `Slack Bot Token`: Organizationテーブルのカラムに追加しSlackへの投稿などの認証に使用します。
 
 ### Slash Command
 
-[Slash Command](https://api.slack.com/interactivity/slash-commands)
+[Slash Command](https://api.slack.com/interactivity/slash-commands)でコマンドが実行されたSlackチャネルとリソースを紐付けます。
 
 ![slash-command-setting](https://github.com/Yarimizu14/slack-app-example/blob/master/images/slash-command.png)
 
@@ -65,7 +73,7 @@ https://github.com/Yarimizu14/slack-app-example/blob/master/app/controllers/slac
 
 ### Shortcut (global)
 
-[Shortcut](https://api.slack.com/interactivity/shortcuts/using#global_shortcuts)
+[Shortcut](https://api.slack.com/interactivity/shortcuts/using#global_shortcuts)で起動するフォームによりSlackチャネルと指定されたリソースを紐付けます。
 
 ![invoke shortcut](https://github.com/Yarimizu14/slack-app-example/blob/master/images/invoke-shortcut.png)
 
@@ -91,8 +99,9 @@ https://github.com/Yarimizu14/slack-app-example/blob/master/app/controllers/slac
 
 Payloadに含まれる `type`によって以下の2種類のリクエストを判別して処理します。
 
-- Shortcut起動時のリクエストの処理 - `type: shortcut`
-- モーダルのフォーム送信リクエスト - `type: view_submission`
+1. Shortcut起動時のリクエストの処理 - `type: shortcut`
+
+2. モーダルのフォーム送信リクエスト - `type: view_submission`
 
 #### Shortcut起動時のリクエスト
 
