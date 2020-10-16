@@ -63,6 +63,15 @@ https://github.com/Yarimizu14/slack-app-example/blob/master/app/controllers/slac
 - Slack連携の設定をDBに書き込みまたは削除します
 - `response_url`にPOSTし、Slash Commandに対する返答を送ります
 
+### Shortcut (global)
+
+[Shortcut](https://api.slack.com/interactivity/shortcuts/using#global_shortcuts)
+
+> These type of shortcuts are intended to trigger workflows that can operate without the context of a channel or message.
+
+API Endpointにチャネルの情報が渡らないので、ユーザーにチャネル選択してもらうことになり少し煩雑になる。
+
+
 
 ##### References
 
